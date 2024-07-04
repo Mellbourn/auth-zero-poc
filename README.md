@@ -1,3 +1,10 @@
+# my notes
+
+Created with
+`npx create-react-app ---use-npm --template typescript auth-zero-poc`
+
+# original docs:
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
