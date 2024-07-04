@@ -3,11 +3,14 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { Page1 } from "./routes/page1";
+import { Auth0Provider } from "@auth0/auth0-react";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Root from "./routes/root";
 import Page2 from "./routes/page2";
+
+import authConfig from "./auth_config.json";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +26,15 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Auth0Provider
+      domain={authConfig.domain}
+      clientId={authConfig.clientId}
+      authorizationParams={{
+        redirect_uri: window.location.origin,
+      }}
+    >
+      <RouterProvider router={router} />
+    </Auth0Provider>
   </React.StrictMode>
 );
 
