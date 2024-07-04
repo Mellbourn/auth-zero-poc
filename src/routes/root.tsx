@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Root() {
+export const Root = () => {
   return (
     <>
       <div id="sidebar">
@@ -18,4 +18,4 @@ export default function Root() {
       <div id="detail"></div>
     </>
   );
-}
+};
