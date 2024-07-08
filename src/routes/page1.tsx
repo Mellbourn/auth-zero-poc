@@ -7,17 +7,17 @@ import {
   Text,
   theme,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export const Page1 = () => {
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const handleBackClick = () => {
-    navigate(-1);
+    history.goBack();
   };
 
   const handleHomeClick = () => {
-    navigate("/");
+    history.push("/");
   };
 
   const { isAuthenticated } = useAuth0();

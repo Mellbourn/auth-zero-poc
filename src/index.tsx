@@ -1,28 +1,17 @@
 import { Auth0Provider } from "@auth0/auth0-react";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import authConfig from "./auth_config.json";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
+import { EnterCode } from "./routes/EnterCode";
 import { Page1 } from "./routes/page1";
 import Page2 from "./routes/page2";
 import PleaseHangTight from "./routes/PleaseHangTight";
+import ProtectedRoute from "./routes/ProtectedRoute";
 import { Root } from "./routes/root";
 import Signup from "./routes/signup";
-import { EnterCode } from "./routes/EnterCode";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />,
-  },
-  { path: "/page1", element: <Page1 /> },
-  { path: "/page2", element: <Page2 /> },
-  { path: "/signup", element: <Signup /> },
-  { path: "/please-hang-tight", element: <PleaseHangTight /> },
-  { path: "/enter-code", element: <EnterCode /> },
-]);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -36,7 +25,16 @@ root.render(
         redirect_uri: window.location.origin,
       }}
     >
-      <RouterProvider router={router} />
+      <Router>
+        <Switch>
+          <Route path="/" exact component={Root} />
+          <ProtectedRoute path="/page1" component={Page1} />
+          <Route path="/page2" component={Page2} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/please-hang-tight" component={PleaseHangTight} />
+          <Route path="/enter-code" component={EnterCode} />
+        </Switch>
+      </Router>
     </Auth0Provider>
   </React.StrictMode>
 );

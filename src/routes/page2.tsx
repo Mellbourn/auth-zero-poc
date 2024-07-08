@@ -7,20 +7,20 @@ import {
   Text,
   theme,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export const Page2 = () => {
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const handleBackClick = () => {
-    navigate(-1);
+    history.goBack();
   };
 
   const handleHomeClick = () => {
-    navigate("/");
+    history.push("/");
   };
 
-  const { isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated } = useAuth0();
 
   return (
     <ChakraProvider theme={theme}>
@@ -42,13 +42,9 @@ export const Page2 = () => {
         <Heading as="h1" size="xl" mb={4} textAlign="center">
           Welcome to Page 2
         </Heading>
-        {isLoading ? (
-          <Text>Loading...</Text>
-        ) : (
-          <Text fontSize="lg" mb={4} textAlign="center">
-            {isAuthenticated ? "" : "Not"} Authenticated
-          </Text>
-        )}
+        <Text fontSize="lg" mb={4} textAlign="center">
+          {isAuthenticated ? "" : "Not"} Authenticated
+        </Text>
         <Text fontSize="lg" mb={4} textAlign="center">
           This is Page2
         </Text>
