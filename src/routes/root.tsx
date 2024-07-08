@@ -1,4 +1,18 @@
 import { useAuth0 } from "@auth0/auth0-react";
+import {
+  Box,
+  Button,
+  ChakraProvider,
+  Flex,
+  Heading,
+  Image,
+  Link,
+  List,
+  ListItem,
+  Spinner,
+  Text,
+  theme,
+} from "@chakra-ui/react";
 import { LoginButton } from "./LoginButton";
 import { LogoutButton } from "./LogoutButton";
 
@@ -6,39 +20,58 @@ export const Root = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Flex justify="center" align="center" height="100vh">
+        <Spinner size="xl" />
+      </Flex>
+    );
   }
 
   return (
-    <>
-      {isAuthenticated ? (
-        <>
-          <LogoutButton />
-          <div>
-            <img src={user?.picture} alt={user?.name} />
-            <h2>{user?.name}</h2>
-            <p>{user?.email}</p>
-          </div>
-        </>
-      ) : (
-        <>
-          <LoginButton />
-          <p>Not Authenticated</p>
-        </>
-      )}
-      <div id="sidebar">
-        <nav>
-          <ul>
-            <li>
-              <a href={`/page1`}>Page 1</a>
-            </li>
-            <li>
-              <a href={`/page2`}>Page 2</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      <div id="detail"></div>
-    </>
+    <ChakraProvider theme={theme}>
+      <Flex direction="column" align="center" p={4}>
+        {isAuthenticated ? (
+          <Box textAlign="center" mb={6}>
+            <LogoutButton />
+            <Flex direction="column" align="center" mt={4}>
+              <Image
+                borderRadius="full"
+                boxSize="100px"
+                src={user?.picture}
+                alt={user?.name}
+              />
+              <Heading as="h2" size="md" mt={4}>
+                {user?.name}
+              </Heading>
+              <Text>{user?.email}</Text>
+            </Flex>
+          </Box>
+        ) : (
+          <Box textAlign="center" mb={6}>
+            <Button as={LoginButton} colorScheme="teal">
+              Log In
+            </Button>
+            <Text mt={4}>Not Authenticated</Text>
+          </Box>
+        )}
+        <Box w="full" maxW="md" mt={4}>
+          <nav>
+            <List spacing={3}>
+              <ListItem>
+                <Link href={`/page1`} color="teal.500" fontSize="lg">
+                  Page 1
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link href={`/page2`} color="teal.500" fontSize="lg">
+                  Page 2
+                </Link>
+              </ListItem>
+            </List>
+          </nav>
+        </Box>
+        <Box id="detail" mt={4}></Box>
+      </Flex>
+    </ChakraProvider>
   );
 };
