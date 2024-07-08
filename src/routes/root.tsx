@@ -48,9 +48,14 @@ export const Root = () => {
           </Box>
         ) : (
           <Box textAlign="center" mb={6}>
-            <Button as={LoginButton} colorScheme="teal">
-              Log In
-            </Button>
+            <Flex align={"center"}>
+              <Button as={LoginButton} colorScheme="teal">
+                Log In
+              </Button>
+              <Link href={`/signup`} color="teal.500" fontSize="lg" ml={4}>
+                Signup
+              </Link>
+            </Flex>
             <Text mt={4}>Not Authenticated</Text>
           </Box>
         )}

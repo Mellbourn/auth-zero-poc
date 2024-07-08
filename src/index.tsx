@@ -1,16 +1,14 @@
+import { Auth0Provider } from "@auth0/auth0-react";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import authConfig from "./auth_config.json";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { Page1 } from "./routes/page1";
-import { Auth0Provider } from "@auth0/auth0-react";
-
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-import { Root } from "./routes/root";
 import Page2 from "./routes/page2";
-
-import authConfig from "./auth_config.json";
+import { Root } from "./routes/root";
+import Signup from "./routes/signup";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +17,7 @@ const router = createBrowserRouter([
   },
   { path: "/page1", element: <Page1 /> },
   { path: "/page2", element: <Page2 /> },
+  { path: "/signup", element: <Signup /> },
 ]);
 
 const root = ReactDOM.createRoot(
