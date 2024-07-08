@@ -16,7 +16,7 @@ import authConfig from "../auth_config.json";
 export const Signup: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [organization, setOrganization] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -37,7 +37,7 @@ export const Signup: React.FC = () => {
         email,
         password,
         connection: "Username-Password-Authentication",
-        user_metadata: { name },
+        user_metadata: { organization },
       }),
     });
 
@@ -73,12 +73,12 @@ export const Signup: React.FC = () => {
         </Text>
         <form onSubmit={handleSignup}>
           <VStack spacing={4}>
-            <FormControl id="name" isRequired>
+            <FormControl id="organization" isRequired>
               <FormLabel>Organization name</FormLabel>
               <Input
                 type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={organization}
+                onChange={(e) => setOrganization(e.target.value)}
               />
             </FormControl>
             <FormControl id="email" isRequired>
