@@ -1,3 +1,15 @@
+import {
+  Box,
+  Button,
+  ChakraProvider,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  Text,
+  VStack,
+  theme,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import authConfig from "../auth_config.json";
 
@@ -41,38 +53,67 @@ export const Signup: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSignup}>
-      <div>
-        <label>Name:</label>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label>Email:</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label>Password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-      <button type="submit">Sign Up</button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p style={{ color: "green" }}>{success}</p>}
-    </form>
+    <ChakraProvider theme={theme}>
+      <Box
+        maxW="md"
+        mx="auto"
+        mt={10}
+        p={8}
+        borderWidth={1}
+        borderRadius="lg"
+        boxShadow="lg"
+        bg="white"
+      >
+        <Heading as="h1" size="lg" mb={6} textAlign="center">
+          Experience the power of Dmaze
+        </Heading>
+        <Text textAlign="center" mb={6}>
+          You are only one step away from unleashing the power of Dmaze. Sign-up
+          with your e-mail and organization name.
+        </Text>
+        <form onSubmit={handleSignup}>
+          <VStack spacing={4}>
+            <FormControl id="name" isRequired>
+              <FormLabel>Organization name</FormLabel>
+              <Input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </FormControl>
+            <FormControl id="email" isRequired>
+              <FormLabel>E-mail</FormLabel>
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </FormControl>
+            <FormControl id="password" isRequired>
+              <FormLabel>Password</FormLabel>
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </FormControl>
+            <Button type="submit" colorScheme="teal" size="lg" width="full">
+              Continue
+            </Button>
+          </VStack>
+          {error && (
+            <Text color="red.500" mt={4}>
+              {error}
+            </Text>
+          )}
+          {success && (
+            <Text color="green.500" mt={4}>
+              {success}
+            </Text>
+          )}
+        </form>
+      </Box>
+    </ChakraProvider>
   );
 };
 
