@@ -7,6 +7,7 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { Page1 } from "./routes/page1";
 import Page2 from "./routes/page2";
+import PleaseHangTight from "./routes/PleaseHangTight";
 import { Root } from "./routes/root";
 import Signup from "./routes/signup";
 
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
   { path: "/page1", element: <Page1 /> },
   { path: "/page2", element: <Page2 /> },
   { path: "/signup", element: <Signup /> },
+  { path: "/please-hang-tight", element: <PleaseHangTight /> },
 ]);
 
 const root = ReactDOM.createRoot(

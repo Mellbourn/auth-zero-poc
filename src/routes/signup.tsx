@@ -12,14 +12,15 @@ import {
 } from "@chakra-ui/react";
 import auth0 from "auth0-js";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import authConfig from "../auth_config.json";
 
 export const Signup: React.FC = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [organization, setOrganization] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,38 +44,17 @@ export const Signup: React.FC = () => {
       },
       function (err, res) {
         if (err) {
-          // handle errors or continue
           setError(JSON.stringify(err) || "An error occurred during signup.");
           return;
         }
 
         console.log("---- success!");
+        setSuccess(
+          "A magic link has been sent to your email. Please check your email to continue."
+        );
+        navigate("/please-hang-tight"); // Navigate to the waiting page
       }
     );
-
-    // const response = await fetch(`https://${domain}/dbconnections/signup`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     client_id: clientId,
-    //     email,
-    //     password,
-    //     connection: "Username-Password-Authentication",
-    //     user_metadata: { organization },
-    //   }),
-    // });
-
-    // const data = await response.json();
-
-    // if (response.ok) {
-    //   setSuccess(
-    //     "Signup successful! Please check your email to verify your account."
-    //   );
-    // } else {
-    //   setError(data.message || "An error occurred during signup.");
-    // }
   };
 
   return (
