@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import {
   Box,
   Button,
@@ -15,6 +16,12 @@ export const Page1 = () => {
     navigate(-1);
   };
 
+  const handleHomeClick = () => {
+    navigate("/");
+  };
+
+  const { isAuthenticated } = useAuth0();
+
   return (
     <ChakraProvider theme={theme}>
       <Box
@@ -26,6 +33,9 @@ export const Page1 = () => {
         borderRadius="lg"
         boxShadow="lg"
       >
+        <Button onClick={handleHomeClick} colorScheme="teal" mb={4} mr={4}>
+          Home
+        </Button>
         <Button onClick={handleBackClick} colorScheme="teal" mb={4}>
           Back
         </Button>
@@ -33,13 +43,11 @@ export const Page1 = () => {
           Welcome to Page 1
         </Heading>
         <Text fontSize="lg" mb={4} textAlign="center">
+          {isAuthenticated ? "" : "Not"} Authenticated
+        </Text>
+        <Text fontSize="lg" mb={4} textAlign="center">
           This is Page1
         </Text>
-        {/* <Box textAlign="center">
-        <Button colorScheme="teal" size="md">
-          Learn More
-        </Button>
-      </Box> */}
       </Box>
     </ChakraProvider>
   );
