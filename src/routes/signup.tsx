@@ -36,7 +36,7 @@ export const Signup: React.FC = () => {
         "Signup successful! Please check your email to verify your account."
       );
     } else {
-      setError(data.error || "An error occurred during signup.");
+      setError(data.message || "An error occurred during signup.");
     }
   };
 
