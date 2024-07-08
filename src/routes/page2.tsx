@@ -20,7 +20,7 @@ export const Page2 = () => {
     navigate("/");
   };
 
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
 
   return (
     <ChakraProvider theme={theme}>
@@ -42,9 +42,13 @@ export const Page2 = () => {
         <Heading as="h1" size="xl" mb={4} textAlign="center">
           Welcome to Page 2
         </Heading>
-        <Text fontSize="lg" mb={4} textAlign="center">
-          {isAuthenticated ? "" : "Not"} Authenticated
-        </Text>
+        {isLoading ? (
+          <Text>Loading...</Text>
+        ) : (
+          <Text fontSize="lg" mb={4} textAlign="center">
+            {isAuthenticated ? "" : "Not"} Authenticated
+          </Text>
+        )}
         <Text fontSize="lg" mb={4} textAlign="center">
           This is Page2
         </Text>
