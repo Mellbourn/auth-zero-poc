@@ -10,6 +10,7 @@ import {
   VStack,
   theme,
 } from "@chakra-ui/react";
+import auth0 from "auth0-js";
 import React, { useState } from "react";
 import authConfig from "../auth_config.json";
 
@@ -27,29 +28,53 @@ export const Signup: React.FC = () => {
 
     const { domain, clientId } = authConfig;
 
-    const response = await fetch(`https://${domain}/dbconnections/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        client_id: clientId,
-        email,
-        password,
-        connection: "Username-Password-Authentication",
-        user_metadata: { organization },
-      }),
+    var webAuth = new auth0.WebAuth({
+      clientID: clientId,
+      domain: domain,
+      redirectUri: "http://localhost:3000/",
+      responseType: "token id_token",
     });
 
-    const data = await response.json();
+    webAuth.passwordlessStart(
+      {
+        connection: "email",
+        send: "code",
+        email,
+      },
+      function (err, res) {
+        if (err) {
+          // handle errors or continue
+          setError(JSON.stringify(err) || "An error occurred during signup.");
+          return;
+        }
 
-    if (response.ok) {
-      setSuccess(
-        "Signup successful! Please check your email to verify your account."
-      );
-    } else {
-      setError(data.message || "An error occurred during signup.");
-    }
+        console.log("---- success!");
+      }
+    );
+
+    // const response = await fetch(`https://${domain}/dbconnections/signup`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     client_id: clientId,
+    //     email,
+    //     password,
+    //     connection: "Username-Password-Authentication",
+    //     user_metadata: { organization },
+    //   }),
+    // });
+
+    // const data = await response.json();
+
+    // if (response.ok) {
+    //   setSuccess(
+    //     "Signup successful! Please check your email to verify your account."
+    //   );
+    // } else {
+    //   setError(data.message || "An error occurred during signup.");
+    // }
   };
 
   return (
@@ -89,14 +114,7 @@ export const Signup: React.FC = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </FormControl>
-            <FormControl id="password" isRequired>
-              <FormLabel>Password</FormLabel>
-              <Input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </FormControl>
+
             <Button type="submit" colorScheme="teal" size="lg" width="full">
               Continue
             </Button>
