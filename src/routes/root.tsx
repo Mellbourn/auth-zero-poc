@@ -1,7 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import {
   Box,
-  Button,
   ChakraProvider,
   Flex,
   Heading,
@@ -49,9 +48,7 @@ export const Root = () => {
         ) : (
           <Box textAlign="center" mb={6}>
             <Flex align={"center"}>
-              <Button as={LoginButton} colorScheme="teal">
-                Log In
-              </Button>
+              <LoginButton />
               <Link href={`/signup`} color="teal.500" fontSize="lg" ml={4}>
                 Signup
               </Link>
