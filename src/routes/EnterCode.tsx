@@ -19,7 +19,7 @@ import authConfig from "../auth_config.json";
 export const EnterCode: React.FC = () => {
   const [code, setCode] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const location = useLocation();
+  const location = useLocation<{ email: string }>();
   const { loginWithRedirect } = useAuth0();
 
   const handleEnterCode = async (e: React.FormEvent) => {

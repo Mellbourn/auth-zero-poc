@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import auth0 from "auth0-js";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import authConfig from "../auth_config.json";
 
 export const Signup: React.FC = () => {
@@ -20,7 +20,7 @@ export const Signup: React.FC = () => {
   const [organization, setOrganization] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,7 +51,7 @@ export const Signup: React.FC = () => {
         setSuccess(
           "A code has been sent to your email. Please check your email to continue."
         );
-        navigate("/enter-code", {
+        history.push("/enter-code", {
           state: { email },
         });
       }
