@@ -38,7 +38,7 @@ export const Signup: React.FC = () => {
     webAuth.passwordlessStart(
       {
         connection: "email",
-        send: "code",
+        send: "link",
         email,
       },
       function (err, res) {
