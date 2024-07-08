@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import {
   Box,
   Button,
@@ -12,14 +13,14 @@ import {
 } from "@chakra-ui/react";
 import auth0 from "auth0-js";
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import authConfig from "../auth_config.json";
 
 export const EnterCode: React.FC = () => {
   const [code, setCode] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
   const location = useLocation();
+  const { loginWithRedirect } = useAuth0();
 
   const handleEnterCode = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,7 +31,7 @@ export const EnterCode: React.FC = () => {
     var webAuth = new auth0.WebAuth({
       clientID: clientId,
       domain: domain,
-      redirectUri: "http://localhost:3000/",
+      redirectUri: window.location.origin,
       responseType: "token id_token",
     });
 
@@ -39,8 +40,11 @@ export const EnterCode: React.FC = () => {
         connection: "email",
         email: location.state.email,
         verificationCode: code,
+        redirectUri: window.location.origin + "/page1",
       },
       function (err, res) {
+        // THIS IS NEVER EXECUTED!
+        console.log("--------------- error", err);
         if (err) {
           setError(
             JSON.stringify(err) || "An error occurred during verification."
@@ -48,7 +52,14 @@ export const EnterCode: React.FC = () => {
           return;
         }
 
-        navigate("/page1");
+        loginWithRedirect({
+          //   openUrl(url) {
+          //     window.location.replace(url);
+          //   },
+          //       {
+          //   fragment: "/page1",
+          //       }
+        });
       }
     );
   };
