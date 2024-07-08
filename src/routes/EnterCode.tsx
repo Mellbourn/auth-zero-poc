@@ -12,20 +12,18 @@ import {
 } from "@chakra-ui/react";
 import auth0 from "auth0-js";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import authConfig from "../auth_config.json";
 
-export const Signup: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [organization, setOrganization] = useState("");
+export const EnterCode: React.FC = () => {
+  const [code, setCode] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleSignup = async (e: React.FormEvent) => {
+  const handleEnterCode = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    setSuccess(null);
 
     const { domain, clientId } = authConfig;
 
@@ -36,24 +34,21 @@ export const Signup: React.FC = () => {
       responseType: "token id_token",
     });
 
-    webAuth.passwordlessStart(
+    webAuth.passwordlessLogin(
       {
         connection: "email",
-        send: "code",
-        email,
+        email: location.state.email,
+        verificationCode: code,
       },
       function (err, res) {
         if (err) {
-          setError(JSON.stringify(err) || "An error occurred during signup.");
+          setError(
+            JSON.stringify(err) || "An error occurred during verification."
+          );
           return;
         }
 
-        setSuccess(
-          "A code has been sent to your email. Please check your email to continue."
-        );
-        navigate("/enter-code", {
-          state: { email },
-        });
+        navigate("/page1");
       }
     );
   };
@@ -71,43 +66,28 @@ export const Signup: React.FC = () => {
         bg="white"
       >
         <Heading as="h1" size="lg" mb={6} textAlign="center">
-          Experience the power of Dmaze
+          Enter Verification Code
         </Heading>
         <Text textAlign="center" mb={6}>
-          You are only one step away from unleashing the power of Dmaze. Sign-up
-          with your e-mail and organization name.
+          Please enter the verification code sent to your email.
         </Text>
-        <form onSubmit={handleSignup}>
+        <form onSubmit={handleEnterCode}>
           <VStack spacing={4}>
-            <FormControl id="organization" isRequired>
-              <FormLabel>Organization name</FormLabel>
+            <FormControl id="code" isRequired>
+              <FormLabel>Verification Code</FormLabel>
               <Input
                 type="text"
-                value={organization}
-                onChange={(e) => setOrganization(e.target.value)}
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
               />
             </FormControl>
-            <FormControl id="email" isRequired>
-              <FormLabel>E-mail</FormLabel>
-              <Input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </FormControl>
-
             <Button type="submit" colorScheme="teal" size="lg" width="full">
-              Continue
+              Verify
             </Button>
           </VStack>
           {error && (
             <Text color="red.500" mt={4}>
               {error}
-            </Text>
-          )}
-          {success && (
-            <Text color="green.500" mt={4}>
-              {success}
             </Text>
           )}
         </form>
@@ -116,4 +96,4 @@ export const Signup: React.FC = () => {
   );
 };
 
-export default Signup;
+export default EnterCode;

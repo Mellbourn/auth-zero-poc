@@ -10,6 +10,7 @@ import Page2 from "./routes/page2";
 import PleaseHangTight from "./routes/PleaseHangTight";
 import { Root } from "./routes/root";
 import Signup from "./routes/signup";
+import { EnterCode } from "./routes/EnterCode";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
   { path: "/page2", element: <Page2 /> },
   { path: "/signup", element: <Signup /> },
   { path: "/please-hang-tight", element: <PleaseHangTight /> },
+  { path: "/enter-code", element: <EnterCode /> },
 ]);
 
 const root = ReactDOM.createRoot(
