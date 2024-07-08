@@ -40,10 +40,9 @@ export const EnterCode: React.FC = () => {
         connection: "email",
         email: location.state.email,
         verificationCode: code,
-        redirectUri: window.location.origin + "/page1",
+        redirectUri: window.location.origin + "/page2",
       },
       function (err, res) {
-        // THIS IS NEVER EXECUTED!
         console.log("--------------- error", err);
         if (err) {
           setError(
@@ -52,14 +51,14 @@ export const EnterCode: React.FC = () => {
           return;
         }
 
-        loginWithRedirect({
-          //   openUrl(url) {
-          //     window.location.replace(url);
-          //   },
-          //       {
-          //   fragment: "/page1",
-          //       }
-        });
+        // loginWithRedirect({
+        //   //   openUrl(url) {
+        //   //     window.location.replace(url);
+        //   //   },
+        //   //       {
+        //   //   fragment: "/page1",
+        //   //       }
+        // });
       }
     );
   };

@@ -51,7 +51,8 @@ export const Signup: React.FC = () => {
         setSuccess(
           "A code has been sent to your email. Please check your email to continue."
         );
-        history.push("/enter-code", {
+        history.push({
+          pathname: "/enter-code",
           state: { email },
         });
       }
