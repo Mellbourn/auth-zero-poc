@@ -14,6 +14,7 @@ import auth0 from "auth0-js";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import authConfig from "../auth_config.json";
+import { Turnstile } from "./Turnstile";
 
 export const Signup: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -21,6 +22,10 @@ export const Signup: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const history = useHistory();
+
+  const handleVerify = (token: string) => {
+    console.log("Turnstile token:", token);
+  };
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -112,6 +117,9 @@ export const Signup: React.FC = () => {
             </Text>
           )}
         </form>
+        <VStack mt={8}>
+          <Turnstile siteKey={authConfig.turnstile} onVerify={handleVerify} />
+        </VStack>
       </Box>
     </ChakraProvider>
   );
