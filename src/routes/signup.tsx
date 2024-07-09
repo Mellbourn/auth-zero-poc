@@ -16,19 +16,25 @@ import { useHistory } from "react-router-dom";
 import authConfig from "../auth_config.json";
 import { Turnstile } from "./Turnstile";
 
-const handleVerify = (token: string) => {
-  console.log("Turnstile token:", token);
-};
-
 export const Signup: React.FC = () => {
   const [email, setEmail] = useState("");
   const [organization, setOrganization] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [isVerified, setIsVerified] = useState<boolean>(false);
   const history = useHistory();
+
+  const handleVerify = React.useCallback((token: string) => {
+    console.log("Turnstile token:", token);
+    setIsVerified(true);
+  }, []);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isVerified) {
+      setError("Please complete the Turnstile verification.");
+      return;
+    }
     setError(null);
     setSuccess(null);
 
@@ -101,7 +107,6 @@ export const Signup: React.FC = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </FormControl>
-
             <Button type="submit" colorScheme="teal" size="lg" width="full">
               Continue
             </Button>
