@@ -16,16 +16,16 @@ import { useHistory } from "react-router-dom";
 import authConfig from "../auth_config.json";
 import { Turnstile } from "./Turnstile";
 
+const handleVerify = (token: string) => {
+  console.log("Turnstile token:", token);
+};
+
 export const Signup: React.FC = () => {
   const [email, setEmail] = useState("");
   const [organization, setOrganization] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const history = useHistory();
-
-  const handleVerify = (token: string) => {
-    console.log("Turnstile token:", token);
-  };
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
