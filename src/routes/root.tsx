@@ -16,7 +16,7 @@ import { LoginButton } from "./LoginButton";
 import { LogoutButton } from "./LogoutButton";
 
 export const Root = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
 
   if (isLoading) {
     return (
@@ -24,6 +24,14 @@ export const Root = () => {
         <Spinner size="xl" />
       </Flex>
     );
+  }
+
+  // This is an ugly hack to force login when code has been entered without error
+  const lastPage = localStorage.getItem("lastPage");
+  localStorage.removeItem("lastPage");
+  console.log("lastPage", lastPage);
+  if (lastPage === "/enter-code") {
+    loginWithRedirect();
   }
 
   return (

@@ -35,16 +35,19 @@ export const EnterCode: React.FC = () => {
       responseType: "token id_token",
     });
 
+    localStorage.setItem("lastPage", "/enter-code");
+
     webAuth.passwordlessLogin(
       {
         connection: "email",
         email: location.state.email,
         verificationCode: code,
-        redirectUri: window.location.origin + "/page2",
+        redirectUri: window.location.origin,
       },
       function (err, res) {
         console.log("--------------- error", err);
         if (err) {
+          localStorage.removeItem("lastPage");
           setError(
             JSON.stringify(err) || "An error occurred during verification."
           );
