@@ -20,6 +20,7 @@ export const Turnstile = memo(
           callback: (token: string) => {
             onVerify(token);
           },
+          theme: "light",
         });
       }
     }, [siteKey, onVerify]);
